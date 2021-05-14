@@ -1,0 +1,7 @@
+{
+  "name": "CoinMasterPro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
