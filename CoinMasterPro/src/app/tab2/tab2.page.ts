@@ -29,7 +29,7 @@ export class Tab2Page {
       console.log(cryptocurrency + ': balance updated!');
       this.myTokens = tokens;
       this.myTokens.forEach((token: TotalToken) => {
-
+        token.totalCoins = 0;
         const coins: any = this.api.getCoinsForToken(token.tokenid);
         try {
           if (coins) {
@@ -41,7 +41,6 @@ export class Tab2Page {
         } catch (err) {
           throw new Error(cryptocurrency + ': failed to fetch totalCoins!');
         }
-
         if (token.tokenid !== '0x00' && token.icon === '') {
           token.icon = this.tools.createAvatarIcon(token.tokenid);
         }

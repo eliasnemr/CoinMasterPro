@@ -1,6 +1,7 @@
 
 ion-grid.balance {
   ion-row {
+    border-radius: 15px;
     ion-col {
       ion-avatar {
         max-width: 34.5px;
@@ -15,5 +16,12 @@ ion-grid.balance {
       display: flex;
       align-items: center;
     }
+    ion-col:last-child {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  ion-row:hover {
+    background: var(--ion-color-hover);
   }
 }

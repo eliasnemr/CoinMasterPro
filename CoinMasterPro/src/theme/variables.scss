@@ -74,7 +74,16 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+  
+  /** Hover **/
+  --ion-color-hover: #F0F0FA;
+  --ion-color-hover-rgb: 240,240,250;
+  --ion-color-hover-contrast: #000000;
+  --ion-color-hover-contrast-rgb: 0,0,0;
+  --ion-color-hover-shade: #d3d3dc;
+  --ion-color-hover-tint: #f2f2fb;
 }
+
 
 @media (prefers-color-scheme: dark) {
   /*
@@ -145,6 +154,13 @@
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
+    --ion-color-hover: #455671;
+    --ion-color-hover-rgb: 69,86,113;
+    --ion-color-hover-contrast: #ffffff;
+    --ion-color-hover-contrast-rgb: 255,255,255;
+    --ion-color-hover-shade: #3d4c63;
+    --ion-color-hover-tint: #58677f;
   }
 
   /*
@@ -153,7 +169,7 @@
    */
 
   .ios body {
-    --ion-background-color: #000000;
+    --ion-background-color: #001C32;
     --ion-background-color-rgb: 0,0,0;
 
     --ion-text-color: #ffffff;
@@ -197,7 +213,7 @@
    */
 
   .md body {
-    --ion-background-color: #121212;
+    --ion-background-color: #001C32;
     --ion-background-color-rgb: 18,18,18;
 
     --ion-text-color: #ffffff;
@@ -233,4 +249,32 @@
 
     --ion-card-background: #1e1e1e;
   }
+}
+/** Minima default font families **/
+@font-face {
+  font-family: 'Monotype';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/monotype.ttf');
+}
+// app fonts
+@font-face {
+  font-family: 'manrope-bold';
+  src: url('../assets/fonts/manrope-bold.otf');
+}
+@font-face {
+  font-family: 'manrope-light';
+  src: url('../assets/fonts/manrope-light.otf');
+}
+@font-face {
+  font-family: 'manrope-regular';
+  src: url('../assets/fonts/manrope-regular.otf');
+}
+@font-face {
+  font-family: 'manrope-semibold';
+  src: url('../assets/fonts/manrope-semibold.otf');
+}
+@font-face {
+  font-family: 'manrope-medium';
+  src: url('../assets/fonts/manrope-medium.otf');
 }

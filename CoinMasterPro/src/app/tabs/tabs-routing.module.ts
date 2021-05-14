@@ -1,3 +1,4 @@
+import { ViewCoinsPageModule } from './../tab2/view-coins/view-coins.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ViewCoinsComponent } from './view-coins.component';
+import { ViewCoinsPage } from './view-coins.page';
 
-describe('ViewCoinsComponent', () => {
-  let component: ViewCoinsComponent;
-  let fixture: ComponentFixture<ViewCoinsComponent>;
+describe('ViewCoinsPage', () => {
+  let component: ViewCoinsPage;
+  let fixture: ComponentFixture<ViewCoinsPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewCoinsComponent ],
+      declarations: [ ViewCoinsPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewCoinsComponent);
+    fixture = TestBed.createComponent(ViewCoinsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
