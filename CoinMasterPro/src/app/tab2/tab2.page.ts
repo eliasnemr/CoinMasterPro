@@ -9,4 +9,12 @@ export class Tab2Page {
 
   constructor() {}
 
+  ionViewWillEnter() {
+    
+  }
+
+  ionViewWillLeave() {
+    
+  }
+
 }
