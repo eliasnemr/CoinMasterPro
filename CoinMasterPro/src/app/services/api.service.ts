@@ -20,7 +20,11 @@ export class ApiService {
   }
 
   getBalance() {
-    this.req('balance');
+    return this.req('balance');
+  }
+
+  getCoinsForToken(tokenid: string) {
+    return this.req('coinsimple "' + tokenid + '"');
   }
 
   req(fnc: any) {

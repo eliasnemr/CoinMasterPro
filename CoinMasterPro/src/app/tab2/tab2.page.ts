@@ -4,6 +4,10 @@ import { Component } from '@angular/core';
 import { ApiService } from './../services/api.service';
 import { Subscription } from 'rxjs';
 
+interface TotalToken extends Token {
+  totalCoins: number
+}
+
 const cryptocurrency = 'Minima';
 @Component({
   selector: 'app-tab2',
@@ -12,7 +16,7 @@ const cryptocurrency = 'Minima';
 })
 export class Tab2Page {
 
-  myTokens: Token[];
+  myTokens: TotalToken[] | Token[];
   $balanceSubscription: Subscription;
 
   constructor(private api: ApiService, private tools: ToolsService) {
@@ -24,7 +28,20 @@ export class Tab2Page {
     this.api.$balance.subscribe((tokens: Token[]) => {
       console.log(cryptocurrency + ': balance updated!');
       this.myTokens = tokens;
-      this.myTokens.forEach(token => {
+      this.myTokens.forEach((token: TotalToken) => {
+
+        const coins: any = this.api.getCoinsForToken(token.tokenid);
+        try {
+          if (coins) {
+            coins.then((res: any) => {
+              const totalCoins = res.response.coins.length;
+              token.totalCoins = totalCoins;
+            });
+          }
+        } catch (err) {
+          throw new Error(cryptocurrency + ': failed to fetch totalCoins!');
+        }
+
         if (token.tokenid !== '0x00' && token.icon === '') {
           token.icon = this.tools.createAvatarIcon(token.tokenid);
         }
