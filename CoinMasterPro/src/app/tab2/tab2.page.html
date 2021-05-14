@@ -12,8 +12,22 @@
       <ion-title size="large">Your Tokens</ion-title>
     </ion-toolbar>
   </ion-header>
-  
-  <div class="tokens">
 
-  </div>
+  <ion-grid>
+    <ion-row *ngFor="let token of myTokens">
+      <ion-col>
+        <ion-avatar>
+          <img *ngIf="token.icon && token.icon !== '' " src="{{token.icon}}" alt="tokenIcon">
+          <img *ngIf="token.icon && token.icon === '' " [src]="token.icon" alt="tokenIcon">
+          <img *ngIf="token.tokenid === '0x00'" src="assets/icon.png" alt="tokenIcon">
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        {{ token.token }}
+      </ion-col>
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
