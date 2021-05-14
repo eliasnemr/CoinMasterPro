@@ -11,7 +11,6 @@
 
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-@import "./theme//variables.scss";
 
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
@@ -29,4 +28,26 @@
 /** Global CSS */
 body, html {
   font-family: manrope-regular;
+}
+ion-header {
+  color: var(--ion-color-text);
+  border-bottom: 1px solid var(--ion-color-ruler);
+  padding-left: 12px;
+}
+ion-footer {
+  border-top: 1px solid var(--ion-color-ruler);
+}
+ion-tab-bar {
+  padding: 15px;
+  border-top: 1px solid var(--ion-color-ruler);
+  ion-tab-button {
+    --color-focused: var(--ion-color-ruler);
+    ion-icon {
+      font-size: 28px;
+    }
+    ion-label {
+      font-family: manrope-semibold;
+      font-size: 12px;
+    }
+  }
 }

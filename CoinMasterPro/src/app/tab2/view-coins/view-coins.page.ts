@@ -11,7 +11,7 @@ interface TokenId {
   templateUrl: './view-coins.page.html',
   styleUrls: ['./view-coins.page.scss'],
 })
-export class ViewCoinsPage implements OnInit {
+export class ViewCoinsPage {
 
   $routerSubscription: Subscription;
   tokenSelected: TokenId;
@@ -23,8 +23,9 @@ export class ViewCoinsPage implements OnInit {
       this.tokenSelected = res;
     });
     console.log('View-Coins-Page called!');
-
   }
 
-  ngOnInit() {}
+  ionViewWillEnter() {
+    console.log('Hello');
+  }
 }
