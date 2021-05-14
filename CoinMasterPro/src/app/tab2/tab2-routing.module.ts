@@ -8,7 +8,7 @@ const routes: Routes = [
     component: Tab2Page,
     children: [
       {
-        path: 'view-coins',
+        path: 'view-coins/:id',
         loadChildren: () => import('./view-coins/view-coins.module').then(m => m.ViewCoinsPageModule)
       }
     ]

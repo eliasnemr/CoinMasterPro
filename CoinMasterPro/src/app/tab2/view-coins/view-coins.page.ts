@@ -1,4 +1,10 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+interface TokenId {
+  id: string
+}
 
 @Component({
   selector: 'app-view-coins',
@@ -7,11 +13,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewCoinsPage implements OnInit {
 
-  constructor() {
-    console.log('View-Coins-Page called!')
+  $routerSubscription: Subscription;
+  tokenSelected: TokenId;
+
+  constructor(private route: ActivatedRoute) {
+    this.$routerSubscription =
+    this.route.params.subscribe((res: TokenId) => {
+      console.log('Router found tokenId:'+ res.id);
+      this.tokenSelected = res;
+    });
+    console.log('View-Coins-Page called!');
+
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

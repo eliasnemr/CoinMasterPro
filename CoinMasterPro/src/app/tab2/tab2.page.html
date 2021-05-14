@@ -15,7 +15,7 @@
   </ion-header>
 
   <ion-grid class="balance">
-    <ion-row *ngFor="let token of myTokens">
+    <ion-row [routerLink]="'view-coins/'+token.tokenid" *ngFor="let token of myTokens">
       <ion-col size="2">
         <ion-avatar>
           <img *ngIf="token.icon && token.icon !== '' " src="{{token.icon}}" alt="tokenIcon">
