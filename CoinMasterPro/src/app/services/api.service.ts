@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Minima } from 'minima';
+import { Minima, Token } from 'minima';
+import { ReplaySubject, Subject } from 'rxjs';
 
 const cryptocurrency = 'Minima';
-const app = 'CoinMasterPro'
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor() { }
+  $balance: Subject<Token[]>;
+
+  constructor() {
+    console.log(cryptocurrency + ' Services started!');
+    this.$balance = new ReplaySubject<Token[]>(1);
+  }
+
+  set$Balance(bln: Token[]) {
+    this.$balance.next(bln);
+  }
+
+  getBalance() {
+    this.req('balance');
+  }
 
   req(fnc: any) {
     return new Promise((resolve, reject) => {
