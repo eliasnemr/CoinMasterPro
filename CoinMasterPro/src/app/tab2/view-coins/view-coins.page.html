@@ -1,14 +1,28 @@
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button routerLink="../../../tab2">
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <div class="wrap">
+        <ion-button class="ion-no-padding ion-no-margin" routerLink="../../../tab2" fill="clear">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-button>
-      </ion-col>
-      <ion-col>
-        <h2>View Token with id: {{ tokenSelected.id }}</h2>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <span>
+          Coins
+        </span>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!found" class="not-found-text-wrapper">
+    This token does not exist in your vallet.    
+  </div>
+  <ion-card *ngIf="found">
+    <ion-card-header>
+      {{ token[0]?.tokenid }}
+    </ion-card-header>
+    <ion-card-content>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>

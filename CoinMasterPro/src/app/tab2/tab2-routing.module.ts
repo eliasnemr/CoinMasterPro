@@ -6,12 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
-    children: [
-      {
-        path: 'view-coins/:id',
-        loadChildren: () => import('./view-coins/view-coins.module').then(m => m.ViewCoinsPageModule)
-      }
-    ]
+    pathMatch: 'full',
+  },
+  {
+    path: 'view-coins/:tokenId',
+    loadChildren: () => import('./view-coins/view-coins.module').then(m => m.ViewCoinsPageModule)
   }
 ];
 

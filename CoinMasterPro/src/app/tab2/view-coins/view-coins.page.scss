@@ -1,0 +1,28 @@
+div.wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  span {
+    padding-left: 10px;
+  }
+  ion-button {
+    --background-hover: none;
+    --color-hover: var(--ion-color-secondary);
+    --opacity: 0.8;
+    ion-icon {
+      font-size: 1.5em;
+    }
+  }
+  ion-button:hover {
+    ion-icon {
+      color: var(--ion-color-secondary);
+    }
+  }
+}
+div.not-found-text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: manrope-light;
+  padding: 15px;
+}

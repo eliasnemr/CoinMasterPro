@@ -10,8 +10,8 @@ ion-grid.balance {
     padding-right: 15px;
     margin-bottom: 15px;
     border-radius: 15px;
-    background-color: #052741;
-    border: 1px solid #253E59;
+    background-color: var(--ion-color-items);
+    border: 1px solid var(--ion-color-item-borders);
     ion-col {
       ion-avatar {
         max-width: 34.5px;
