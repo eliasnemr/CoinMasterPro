@@ -26,3 +26,77 @@ div.not-found-text-wrapper {
   font-family: manrope-light;
   padding: 15px;
 }
+ion-card {
+  margin-left: 35px;
+  margin-right: 35px;
+}
+p {
+  span#coinAmount {
+    font-family: manrope-semibold;
+    color: var(--ion-color-primary);
+  }
+}
+ion-card {
+  ion-card-header#tools {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    ion-icon {
+      cursor: pointer;
+      font-size: 1.3em;
+    }
+  }
+  ion-card-content {
+    ion-grid {
+      ion-row {
+        border-bottom: 1px solid var(--ion-color-ruler);
+        ion-col#checkbox {
+          display: flex;
+          justify-content: flex-end;
+        }
+        ion-col {
+          color: var(--ion-color-primary);
+          ion-label {
+            color: var(--ion-color-text);
+            font-variant-numeric: tabular-nums;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          ion-avatar {
+            display: flex;
+            align-items: center;
+            img {
+              height: 32px;
+              width: 32px;
+            }
+          }
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+div.functions {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  ion-button {
+    color: var(--ion-color-text);
+    ion-icon {
+      justify-self: flex-start;
+      margin-right: 10px;
+      color: var(--ion-color-text);
+    }
+    border: 1px solid var(--ion-color-ruler);
+    text-transform: none;
+  }
+  ion-button:hover {
+    color: var(--ion-color-primary);
+    ion-icon {
+      color: var(--ion-color-primary);
+    }
+  }
+}

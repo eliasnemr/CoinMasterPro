@@ -1,3 +1,4 @@
+import { ToolsService } from './../../services/tools.service';
 import { ApiService } from './../../services/api.service';
 import { Token } from 'minima';
 import { Subscription } from 'rxjs';
@@ -7,7 +8,21 @@ import { ActivatedRoute } from '@angular/router';
 interface TokenId {
   tokenId: string
 }
+interface Coin {
+  coin: {
+    address: string;
+    amount: string;
+    coinid: string;
+    floating: boolean;
+    mxaddress: string;
+    storestate: boolean;
+    tokenid: string;
+  }
+  key: string;
+  tokenamount: string;
+}
 
+const cryptocurrency = 'Minima';
 @Component({
   selector: 'app-view-coins',
   templateUrl: './view-coins.page.html',
@@ -17,11 +32,17 @@ export class ViewCoinsPage {
 
   $routerSubscription: Subscription;
   $balanceSubscription: Subscription;
+  $coinSubscription: Subscription;
+  coins: Coin[];
   token: Token[];
   found: boolean;
+  isCoinsFound: boolean;
   tokenSelectedId: TokenId;
   
-  constructor(private route: ActivatedRoute, private api: ApiService) {
+  constructor(
+    private route: ActivatedRoute, 
+    private api: ApiService,
+    private tools: ToolsService) {
     this.$routerSubscription =
     this.route.params.subscribe((res: TokenId) => {
       this.$balanceSubscription =
@@ -30,6 +51,33 @@ export class ViewCoinsPage {
 
         if (this.token.length > 0) {
           this.found = true;
+
+          const coins: any =
+          this.api.getCoinsForToken(this.token[0].tokenid);
+          try {
+            if (coins) {
+              coins.then((res: any) => {
+                const totalCoins = res.response.coins;
+                this.coins = totalCoins;
+                if (this.coins.length > 0) {
+                  this.isCoinsFound = true;
+                  console.log(this.coins);
+                } else {
+                  this.isCoinsFound = false;
+                  console.log('No coins found.');
+                }
+              });
+
+            }
+          } catch (err) {
+            throw new Error(cryptocurrency + ' : failed to fetch coins.');
+          }
+
+          if (this.token[0].tokenid !== '0x00' && this.token[0].icon === '') {
+            this.token[0].icon = this.tools.createAvatarIcon(this.token[0].tokenid);
+          }
+        
+    
         } else {
           this.found = false;
         }
