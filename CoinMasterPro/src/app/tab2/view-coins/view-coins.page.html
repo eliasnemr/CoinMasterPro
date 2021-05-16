@@ -20,11 +20,11 @@
   <ion-card *ngIf="found">
     <ion-card-header>
       <div class="functions">
-        <ion-button fill="clear">
+        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="submitForm()">
           <ion-icon name="color-filter-outline"></ion-icon>
           Aggregate
         </ion-button>
-        <ion-button fill="clear">
+        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear">
           <ion-icon name="person-circle-outline"></ion-icon>
           Send
         </ion-button>
@@ -48,27 +48,30 @@
       <div *ngIf="!isCoinsFound" class="not-found-text-wrapper">
         Coins not found for token, please try again.
       </div>
-      <ion-grid *ngIf="isCoinsFound">
-        <ion-row *ngFor="let coin of coins">
-          <ion-col sizeXs="3" sizeSm="2" sizeMd="1">
-            <ion-avatar><img src="assets/coin.svg" alt="coinImage"></ion-avatar>
-          </ion-col>
-          <ion-col>
-            {{ 
-              coin.coin.address.substring(0, 7) + '...' +
-              coin.coin.address.substring(coin.coin.address.length-2, coin.coin.address.length)
-            }}
-          </ion-col>
-          <ion-col>
-            <ion-label>
-              {{ coin.coin.amount }}
-            </ion-label>
-          </ion-col>
-          <ion-col id="checkbox">
-            <ion-checkbox></ion-checkbox>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <form [formGroup]="aggregateForm" id="aggregateForm" (ngSubmit)="submitForm()">
+        {{ aggregateForm.value | json }}
+        <ion-grid *ngIf="isCoinsFound">
+          <ion-row *ngFor="let coin of coins">
+            <ion-col sizeXs="3" sizeSm="2" sizeMd="1">
+              <ion-avatar><img src="assets/coin.svg" alt="coinImage"></ion-avatar>
+            </ion-col>
+            <ion-col>
+              {{ 
+                coin.coin.address.substring(0, 7) + '...' +
+                coin.coin.address.substring(coin.coin.address.length-2, coin.coin.address.length)
+              }}
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                {{ coin.coin.amount }}
+              </ion-label>
+            </ion-col>
+            <ion-col id="checkbox">
+              <ion-checkbox [value]="coin.coin.coinid" (ionChange)="onCheckboxChange($event)"></ion-checkbox>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
       <!-- <ion-list *ngIf="isCoinsFound">
         <ion-item *ngFor="let coin of coins">
           <h2>
