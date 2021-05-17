@@ -1,3 +1,4 @@
+import { ToolsService } from './../../services/tools.service';
 import { Decimal } from 'decimal.js';
 import { ApiService, app } from './../../services/api.service';
 import { SelectedCoins } from './../../tab2/view-coins/view-coins.page';
@@ -19,7 +20,8 @@ export class AggregatePage implements OnInit {
   constructor(
     public modalController: ModalController,
     private navParams: NavParams,
-    private api: ApiService) {
+    private api: ApiService,
+    private tools: ToolsService) {
       this.selectedCoins = this.navParams.get('selectedCoinsArr').selectedCoinsArr; /** Retrieve passed data */
       this.tokenid = this.navParams.get('tokenid'); /** Retrieve passed tokenid */
       this.totalOutput = new Decimal(0);
@@ -42,8 +44,10 @@ export class AggregatePage implements OnInit {
         if (res) {
           this.confirmBtn.disabled = false;
           this.modalController.dismiss();
+          this.tools.presentToast('Aggregated your coins.', 'primary', 'top');
         } else {
-
+          this.confirmBtn.disabled = false;
+          this.tools.presentToast('Transaction failed', 'secondary', 'top');
         }
       } else {
         console.log(app + ': cannot post a transaction with no tokenid or no coinsSelected.');

@@ -54,7 +54,7 @@ export class ApiService {
     coinsArr.forEach((coin: SelectedCoins) => {
       total = total.add(new Decimal(coin.amount));
     });
-    console.log('totalFinish: '+total.toString());
+    // console.log('totalFinish: '+total.toString());
     /** prepare transaction text */
     const transaction =
     'txncreate '   + id + ';' +
@@ -65,7 +65,7 @@ export class ApiService {
     'txndelete '   + id;
     /** post it.. */
     const result = await this.postTransaction(transaction);
-    console.log('RESULT: '+ result);
+    // console.log('RESULT: '+ result);
     if (result) {
       return true;
     } else {
@@ -111,7 +111,7 @@ export class ApiService {
   req(fnc: any) {
     return new Promise((resolve, reject) => {
       Minima.cmd(fnc, (res: any) => {
-        console.log(res);
+        // console.log(res);
         if (Minima.util.checkAllResponses(res)) {
           resolve(res);
         } else {

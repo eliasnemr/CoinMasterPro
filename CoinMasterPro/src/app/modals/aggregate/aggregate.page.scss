@@ -20,11 +20,10 @@ ion-card {
   ion-card-subtitle {
     margin-left: 20px;
     margin-right: 17px;
+    ion-label#warning {
+      font-family: manrope-light;
+    }
     ion-toolbar {
-      ion-label#warning {
-        font-family: manrope-light;
-        max-width: 90px;
-      }
       ion-button:last-child {
         --color: #FAFAF0;
         background-color: var(--ion-color-primary);
