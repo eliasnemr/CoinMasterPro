@@ -1,3 +1,4 @@
+import { SelectedCoins } from './../tab2/view-coins/view-coins.page';
 import { Injectable } from '@angular/core';
 import { Minima, Token } from 'minima';
 import { ReplaySubject, Subject } from 'rxjs';
@@ -25,6 +26,34 @@ export class ApiService {
 
   getCoinsForToken(tokenid: string) {
     return this.req('coinsimple "' + tokenid + '"');
+  }
+
+  getAddress(): Promise<string> {
+    return new Promise((resolve) => {
+      this.req('newaddress').then((res: any) => {
+        if (res.status) {
+          resolve(res.response.address.hexaddress);
+        } else {
+          resolve('');
+        }
+      });
+    });
+  }
+
+  async createTransaction(tokenid: string, coinsArr: SelectedCoins[]) {
+    const id = Math.floor(Math.random() * 1000000000 );
+    const address = await this.getAddress();
+    const transaction = {
+      id: id,
+      inputs: {
+        coins: coinsArr
+      },
+      output: {
+        t_id: tokenid,
+        addr: address,
+        amt: null,
+      },
+    }
   }
 
   req(fnc: any) {

@@ -1,7 +1,7 @@
 import { ToolsService } from './../../services/tools.service';
 import { ApiService } from './../../services/api.service';
 import { Token } from 'minima';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, ReplaySubject } from 'rxjs';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
@@ -22,6 +22,10 @@ interface Coin {
   key: string;
   tokenamount: string;
 }
+export interface SelectedCoins {
+  coinid: string;
+  amount: string;
+}
 
 const cryptocurrency = 'Minima';
 @Component({
@@ -36,6 +40,7 @@ export class ViewCoinsPage {
   $coinSubscription: Subscription;
   coins: Coin[];
   token: Token[];
+  selectedCoins: Subject<SelectedCoins[]>;
   found: boolean;
   isCoinsFound: boolean;
   tokenSelectedId: TokenId;
@@ -46,6 +51,7 @@ export class ViewCoinsPage {
     private api: ApiService,
     private tools: ToolsService,
     private formBuilder: FormBuilder) {
+    this.selectedCoins = new ReplaySubject<SelectedCoins[]>(1);
     /** initialize form */
     this.initForm();
     /** subscribe to router url params */
@@ -133,7 +139,15 @@ export class ViewCoinsPage {
     }
   }
 
-  submitForm() {
-    
+  aggregateCoins() {
+    const selected = this.aggregateForm.get('selectedCoinsArr');
+    console.log('User selected the following coins to aggregate:');
+    console.log(selected.value);
+    this.selectedCoins.next(selected.value);
+
+  }
+
+  aggregateCoinsOther() {
+
   }
 }
