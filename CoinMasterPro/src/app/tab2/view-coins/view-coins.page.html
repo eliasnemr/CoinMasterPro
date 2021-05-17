@@ -20,7 +20,7 @@
   <ion-card *ngIf="found">
     <ion-card-header>
       <div class="functions">
-        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="aggregateCoins()">
+        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="aggregateCoins(token[0]?.tokenid)">
           <!-- <ion-icon name="color-filter-outline"></ion-icon> -->
           Aggregate
         </ion-button>
@@ -36,10 +36,12 @@
       </ion-avatar>
       <div class="token-details">
         <h2>{{ token[0]?.token }}</h2>
-        <p class="ion-no-padding ion-no-margin">
+        <p *ngIf="coins?.length > 0" class="ion-no-padding ion-no-margin">
           <span id="coinAmount">{{coins?.length}}</span> coin<span *ngIf="coins?.length > 1">s</span> available</p>
+        <p *ngIf="coins?.length === 0">
+          No coins available
+        </p>    
       </div>
-
     </ion-card-header>
     <ion-card-header id="tools" class="ion-no-padding">
       <ion-icon name="settings"></ion-icon>
@@ -48,8 +50,8 @@
       <div *ngIf="!isCoinsFound" class="not-found-text-wrapper">
         Coins not found for token, please try again.
       </div>
-      <form [formGroup]="aggregateForm" id="aggregateForm" (ngSubmit)="submitForm()">
-        {{ aggregateForm.value | json }}
+      <form [formGroup]="aggregateForm" id="aggregateForm">
+        <!-- {{ aggregateForm.value | json }} -->
         <ion-grid *ngIf="isCoinsFound">
           <ion-row *ngFor="let coin of coins">
             <ion-col sizeXs="3" sizeSm="2" sizeMd="1">

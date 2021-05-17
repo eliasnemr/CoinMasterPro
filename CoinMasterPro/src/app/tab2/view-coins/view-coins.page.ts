@@ -7,9 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 
 interface TokenId {
-  tokenId: string
+  tokenId: string;
 }
-interface Coin {
+export interface Coin {
   coin: {
     address: string;
     amount: string;
@@ -18,7 +18,7 @@ interface Coin {
     mxaddress: string;
     storestate: boolean;
     tokenid: string;
-  }
+  };
   key: string;
   tokenamount: string;
 }
@@ -27,6 +27,7 @@ export interface SelectedCoins {
   amount: string;
 }
 
+const app = 'CoinMasterPro';
 const cryptocurrency = 'Minima';
 @Component({
   selector: 'app-view-coins',
@@ -45,9 +46,9 @@ export class ViewCoinsPage {
   isCoinsFound: boolean;
   tokenSelectedId: TokenId;
   aggregateForm: FormGroup;
-  
+
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private api: ApiService,
     private tools: ToolsService,
     private formBuilder: FormBuilder) {
@@ -69,8 +70,8 @@ export class ViewCoinsPage {
           this.api.getCoinsForToken(this.token[0].tokenid);
           try {
             if (coins) {
-              coins.then((res: any) => {
-                const totalCoins = res.response.coins;
+              coins.then((resp: any) => {
+                const totalCoins = resp.response.coins;
                 this.coins = totalCoins;
                 /** if coins found return true.. */
                 if (this.coins.length > 0) {
@@ -91,8 +92,6 @@ export class ViewCoinsPage {
           if (this.token[0].tokenid !== '0x00' && this.token[0].icon === '') {
             this.token[0].icon = this.tools.createAvatarIcon(this.token[0].tokenid);
           }
-        
-    
         } else {
           this.found = false;
         }
@@ -128,9 +127,9 @@ export class ViewCoinsPage {
     if (e.target.checked) {
       checkArray.push(new FormControl(e.target.value));
     } else {
-      let i: number = 0;
+      let i = 0;
       checkArray.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
+        if (item.value === e.target.value) {
           checkArray.removeAt(i);
           return;
         }
@@ -139,12 +138,17 @@ export class ViewCoinsPage {
     }
   }
 
-  aggregateCoins() {
+  aggregateCoins(tokenid: string) {
     const selected = this.aggregateForm.get('selectedCoinsArr');
-    console.log('User selected the following coins to aggregate:');
-    console.log(selected.value);
-    this.selectedCoins.next(selected.value);
-
+    try {
+      if (selected.value.length > 0 && tokenid !== '') {
+        this.api.createTransaction(tokenid, selected.value);
+      } else {
+        console.log(app + ': cannot post a transaction with no tokenid or no coinsSelected.');
+      }
+    } catch (err) {
+      throw new Error(app + ': posting aggregate transaction failed.');
+    }
   }
 
   aggregateCoinsOther() {
