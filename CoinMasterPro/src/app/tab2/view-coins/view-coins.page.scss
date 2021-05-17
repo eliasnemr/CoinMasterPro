@@ -37,9 +37,11 @@ p {
   }
 }
 ion-card {
-  border-radius: 15px;
   padding: 5px;
+  box-shadow: none;
   background-color: var(--ion-color-items);
+  border: 1px solid var(--ion-color-item-borders);
+  border-radius: 15px;
   ion-card-header#tools {
     display: flex;
     justify-content: flex-end;

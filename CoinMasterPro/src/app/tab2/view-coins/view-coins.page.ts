@@ -56,6 +56,10 @@ export class ViewCoinsPage {
     this.selectedCoins = new ReplaySubject<SelectedCoins[]>(1);
     /** initialize form */
     this.initForm();
+  }
+
+  ionViewWillEnter() {
+    // console.log('Hello');
     /** subscribe to router url params */
     this.$routerSubscription =
     this.route.params.subscribe((res: TokenId) => {
@@ -102,13 +106,10 @@ export class ViewCoinsPage {
     // console.log('View-Coins-Page called!');
   }
 
-  ionViewWillEnter() {
-    // console.log('Hello');
-  }
-
   ionViewWillLeave() {
     this.$routerSubscription.unsubscribe();
     this.$balanceSubscription.unsubscribe();
+    this.resetForm();
   }
 
   initForm() {
@@ -152,11 +153,11 @@ export class ViewCoinsPage {
     }
   }
 
-  async displayAggregateModal(sCoins: SelectedCoins[]) {
+  async displayAggregateModal(sCoins: SelectedCoins[], tid: string) {
     const aggregateModal = await this.modalController.create({
       component: AggregatePage,
       cssClass: 'aggregate-page-modal',
-      componentProps: {selectedCoinsArr: sCoins},
+      componentProps: {selectedCoinsArr: sCoins, tokenid: tid},
     });
     return await aggregateModal.present();
   }

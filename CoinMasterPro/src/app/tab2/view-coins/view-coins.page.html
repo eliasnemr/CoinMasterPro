@@ -20,11 +20,11 @@
   <ion-card *ngIf="found">
     <ion-card-header>
       <div class="functions">
-        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="displayAggregateModal(aggregateForm.value)">
+        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="displayAggregateModal(aggregateForm.value, token[0]?.tokenid)">
           <!-- <ion-icon name="color-filter-outline"></ion-icon> -->
           Aggregate
         </ion-button>
-        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" (click)="aggregateCoinsOther()">
+        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear">
           <!-- <ion-icon name="person-circle-outline"></ion-icon> -->
           Send
         </ion-button>
@@ -48,7 +48,7 @@
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <div *ngIf="!isCoinsFound" class="not-found-text-wrapper">
-        Coins not found for token, please try again.
+        Coins not found for token, they may be in the mempool awaiting confirmation, please wait.
       </div>
       <form [formGroup]="aggregateForm" id="aggregateForm">
         <!-- {{ aggregateForm.value | json }} -->

@@ -1,0 +1,42 @@
+ion-card {
+  margin-left: 29px!important;
+  div.preview {
+    color: var(--ion-color-secondary);
+    padding-bottom: 25px;
+  }
+  ion-card-content {
+    ion-grid {
+      ion-row {
+        ion-col {
+          ion-label {
+            h2 {
+              color: var(--ion-color-secondary)!important;
+            }
+          }
+        }
+      }
+    }
+  }
+  ion-card-subtitle {
+    margin-left: 20px;
+    margin-right: 17px;
+    ion-toolbar {
+      ion-label#warning {
+        font-family: manrope-light;
+        max-width: 90px;
+      }
+      ion-button:last-child {
+        --color: #FAFAF0;
+        background-color: var(--ion-color-primary);
+        border: 1px solid var(--ion-color-item-borders);
+        text-transform: none;
+      }
+      ion-button:first-child {
+        text-transform: none;
+      }
+      ion-button:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}

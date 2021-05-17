@@ -1,9 +1,48 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>aggregate</ion-title>
+    <ion-title>Aggregating coins...</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header>
+      <h6 *ngIf="selectedCoins?.length > 1" class="ion-no-padding ion-no-margin">You are about to aggregate {{ selectedCoins?.length }} coins...</h6>
+      <h6 *ngIf="selectedCoins?.length === 1" class="ion-no-padding ion-no-margin">You are about to aggregate {{ selectedCoins?.length }} coin...</h6>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+        <div class="preview">Preview</div>
+        <ion-row>
+          <ion-col sizeXs="3" sizeSm="2" sizeMd="2">
+            <ion-avatar>
+              <ion-avatar><img src="assets/coin.svg" alt="coinImage"></ion-avatar>
+            </ion-avatar>
+          </ion-col>
+          <ion-col>
+            <ion-label>
+              <h2>
+                Aggregated coin
+              </h2>
+              <p>{{ totalOutput }}</p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-card-subtitle>
+      <ion-toolbar>
+        <ion-label id="warning">
+          This transaction cannot be reverted once confirmed.
+        </ion-label>
+        <ion-button (click)="modalController.dismiss()" slot="end" fill="clear">
+          Cancel
+        </ion-button>
+        <ion-button #confirmBtn (click)="aggregateCoins()" slot="end" fill="clear">
+          Confirm
+        </ion-button>
+      </ion-toolbar>
+    </ion-card-subtitle>
+  </ion-card>
 
 </ion-content>
