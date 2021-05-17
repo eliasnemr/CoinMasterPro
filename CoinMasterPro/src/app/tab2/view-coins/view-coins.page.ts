@@ -1,10 +1,12 @@
+import { AggregatePage } from './../../modals/aggregate/aggregate.page';
 import { ToolsService } from './../../services/tools.service';
-import { ApiService } from './../../services/api.service';
+import { ApiService, app, cryptocurrency } from './../../services/api.service';
 import { Token } from 'minima';
 import { Subscription, Subject, ReplaySubject } from 'rxjs';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 
 interface TokenId {
   tokenId: string;
@@ -27,8 +29,6 @@ export interface SelectedCoins {
   amount: string;
 }
 
-const app = 'CoinMasterPro';
-const cryptocurrency = 'Minima';
 @Component({
   selector: 'app-view-coins',
   templateUrl: './view-coins.page.html',
@@ -48,6 +48,7 @@ export class ViewCoinsPage {
   aggregateForm: FormGroup;
 
   constructor(
+    public modalController: ModalController,
     private route: ActivatedRoute,
     private api: ApiService,
     private tools: ToolsService,
@@ -151,7 +152,12 @@ export class ViewCoinsPage {
     }
   }
 
-  aggregateCoinsOther() {
-
+  async displayAggregateModal(sCoins: SelectedCoins[]) {
+    const aggregateModal = await this.modalController.create({
+      component: AggregatePage,
+      cssClass: 'aggregate-page-modal',
+      componentProps: {selectedCoinsArr: sCoins},
+    });
+    return await aggregateModal.present();
   }
 }

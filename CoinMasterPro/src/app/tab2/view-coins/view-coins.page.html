@@ -20,7 +20,7 @@
   <ion-card *ngIf="found">
     <ion-card-header>
       <div class="functions">
-        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="aggregateCoins(token[0]?.tokenid)">
+        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="displayAggregateModal(aggregateForm.value)">
           <!-- <ion-icon name="color-filter-outline"></ion-icon> -->
           Aggregate
         </ion-button>

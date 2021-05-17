@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: '**', 
     redirectTo: '/tabs/tab2'
+  },
+  {
+    path: 'aggregate',
+    loadChildren: () => import('./modals/aggregate/aggregate.module').then( m => m.AggregatePageModule)
   }
 ];
 @NgModule({

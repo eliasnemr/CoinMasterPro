@@ -5,7 +5,8 @@ import { Minima, Token } from 'minima';
 import { ReplaySubject, Subject } from 'rxjs';
 
 Decimal.set({precision: 64}); /** set precision for Decimal calculations */
-const cryptocurrency = 'Minima';
+export const cryptocurrency = 'Minima';
+export const app = 'CoinMasterPro';
 @Injectable({
   providedIn: 'root'
 })
