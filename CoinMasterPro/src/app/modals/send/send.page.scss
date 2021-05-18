@@ -1,0 +1,29 @@
+form {
+ion-grid {
+  ion-row {
+      padding-bottom: 15px;
+      ion-col {
+        ion-item {
+          --background: none;
+        }
+        ion-input {
+          letter-spacing: 0.02em;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          --background: var(--ion-color-items);
+          border: 1px solid var(--ion-color-item-borders);
+          margin-bottom: 10px;
+          margin-top: 10px;
+        }
+        ion-label {
+          color: var(--ion-color-primary);
+        }
+      }
+      ion-note {
+        span#total {
+          color: var(--ion-color-primary);
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,9 @@
+import { Router } from '@angular/router';
 import { ToolsService } from './../../services/tools.service';
 import { Decimal } from 'decimal.js';
 import { ApiService, app } from './../../services/api.service';
 import { SelectedCoins } from './../../tab2/view-coins/view-coins.page';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavParams, ModalController, IonButton } from '@ionic/angular';
 
 @Component({
@@ -21,20 +22,26 @@ export class AggregatePage implements OnInit {
     public modalController: ModalController,
     private navParams: NavParams,
     private api: ApiService,
-    private tools: ToolsService) {
-      this.selectedCoins = this.navParams.get('selectedCoinsArr').selectedCoinsArr; /** Retrieve passed data */
-      this.tokenid = this.navParams.get('tokenid'); /** Retrieve passed tokenid */
-      this.totalOutput = new Decimal(0);
-      this.selectedCoins.forEach(coin => {
-        this.totalOutput =
-        this.totalOutput.add(new Decimal(coin.amount));
-      });
+    private tools: ToolsService,
+    private route: Router) {
+    }
+
+    ngOnInit() {
+    }
+
+  ionViewWillEnter() {
+    this.selectedCoins = this.navParams.get('selectedCoinsArr').selectedCoinsArr; /** Retrieve passed data */
+    this.tokenid = this.navParams.get('tokenid'); /** Retrieve passed tokenid */
+    this.totalOutput = new Decimal(0);
+    this.selectedCoins.forEach(coin => {
+      this.totalOutput =
+      this.totalOutput.add(new Decimal(coin.amount));
+    });
   }
 
-  ngOnInit() {
+  ionViewWillLeave() {
+    this.route.navigate(['view-coins/'+this.tokenid]);
   }
-
-  ionViewWillEnter() {}
 
   async aggregateCoins() {
     this.confirmBtn.disabled = true;

@@ -73,6 +73,56 @@ export class ApiService {
     }
   }
 
+  async createTransactionCustom(tokenid: string, coinsArr: SelectedCoins[], recipient: string, amnt: string) {
+    // console.log('tokenid:'+ tokenid + ' selectedCoins:'+ coinsArr);
+    const id = Math.floor(Math.random() * 1000000000);
+    const myAddress = await this.getAddress();
+    const amount = new Decimal(amnt);
+    const inputString = await this.generateInputText(coinsArr, id); console.log(app + ':'+ ' inputString created:' + inputString);
+    /** workout aggregating total of inputs */
+    let total = new Decimal('0');
+    // console.log('initTotal: '+ total);
+    coinsArr.forEach((coin: SelectedCoins) => {
+      total = total.add(new Decimal(coin.amount));
+    });
+    // console.log('totalFinish: '+total.toString());
+    let transaction = '';
+    if (amount.lessThan(total)) {
+      /** Calculate the change */
+      const change = total.minus(amount);
+      // console.log('Your change sir is: '+ change);
+      /** prepare transaction text */
+      transaction =
+      'txncreate '   + id + ';' +
+       inputString   +
+      'txnoutput '   + id + ' ' + amount + ' ' + recipient + ' ' + tokenid + ' ' + 0 + ';' +
+      'txnoutput '   + id + ' ' + change + ' ' + myAddress + ' ' + tokenid + ' ' + 0 + ';' +
+      'txnsignauto ' + id + ';' +
+      'txnpost '     + id + ';' +
+      'txndelete '   + id;
+
+
+    } else {
+      /** prepare transaction text */
+      transaction =
+      'txncreate '   + id + ';' +
+       inputString   +
+      'txnoutput '   + id + ' ' + total + ' ' + recipient + ' ' + tokenid + ' ' + 0 + ';' +
+      'txnsignauto ' + id + ';' +
+      'txnpost '     + id + ';' +
+      'txndelete '   + id;
+    }
+    /** post it.. */
+    const result = await this.postTransaction(transaction);
+    // console.log('RESULT: '+ result);
+    if (result) {
+      return true;
+    } else {
+      throw new Error(app+ ': failed to post transaction.  Error:'+JSON.stringify(result));
+      return false;
+    }
+  }
+
   generateInputText(inputArr: SelectedCoins[], txnId: number) {
     let inputString = '';
     return new Promise((resolve) => {
@@ -93,6 +143,7 @@ export class ApiService {
         if (transaction !== '') {
           this.req(transaction).then((res: any) => {
             if (Minima.util.checkAllResponses(res)) {
+              // console.log(res);
               resolve(true);
             } else {
               resolve(false);

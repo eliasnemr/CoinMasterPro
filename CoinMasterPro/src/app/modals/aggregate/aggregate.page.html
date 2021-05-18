@@ -31,6 +31,9 @@
       </ion-grid>
     </ion-card-content>
     <ion-card-subtitle>
+      <ion-label id="warning">
+        This transaction cannot be reverted once confirmed.
+      </ion-label>
       <ion-toolbar>
         <ion-button (click)="modalController.dismiss()" slot="end" fill="clear">
           Cancel
@@ -39,9 +42,6 @@
           Confirm
         </ion-button>
       </ion-toolbar>
-      <ion-label id="warning">
-        This transaction cannot be reverted once confirmed.
-      </ion-label>
     </ion-card-subtitle>
   </ion-card>
 

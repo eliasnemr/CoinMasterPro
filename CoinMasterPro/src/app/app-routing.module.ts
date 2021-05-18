@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'aggregate',
     loadChildren: () => import('./modals/aggregate/aggregate.module').then( m => m.AggregatePageModule)
+  },
+  {
+    path: 'send',
+    loadChildren: () => import('./modals/send/send.module').then( m => m.SendPageModule)
   }
 ];
 @NgModule({

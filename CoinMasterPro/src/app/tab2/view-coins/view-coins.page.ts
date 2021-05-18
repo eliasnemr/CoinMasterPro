@@ -1,17 +1,19 @@
+import { SendPage } from './../../modals/send/send.page';
 import { AggregatePage } from './../../modals/aggregate/aggregate.page';
 import { ToolsService } from './../../services/tools.service';
-import { ApiService, app, cryptocurrency } from './../../services/api.service';
+import { ApiService, cryptocurrency } from './../../services/api.service';
 import { Token } from 'minima';
 import { Subscription, Subject, ReplaySubject } from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonButton } from '@ionic/angular';
 
 interface TokenId {
   tokenId: string;
 }
 export interface Coin {
+  checked: boolean;
   coin: {
     address: string;
     amount: string;
@@ -36,6 +38,7 @@ export interface SelectedCoins {
 })
 export class ViewCoinsPage {
 
+  @ViewChild('aggregateBtn', {static: false}) aggregateBtn: IonButton;
   $routerSubscription: Subscription;
   $balanceSubscription: Subscription;
   $coinSubscription: Subscription;
@@ -53,13 +56,14 @@ export class ViewCoinsPage {
     private api: ApiService,
     private tools: ToolsService,
     private formBuilder: FormBuilder) {
-    this.selectedCoins = new ReplaySubject<SelectedCoins[]>(1);
     /** initialize form */
     this.initForm();
+    this.selectedCoins = new ReplaySubject<SelectedCoins[]>(1);
+    this.coins = [];
   }
 
   ionViewWillEnter() {
-    // console.log('Hello');
+    this.resetForm();
     /** subscribe to router url params */
     this.$routerSubscription =
     this.route.params.subscribe((res: TokenId) => {
@@ -81,7 +85,7 @@ export class ViewCoinsPage {
                 /** if coins found return true.. */
                 if (this.coins.length > 0) {
                   this.isCoinsFound = true;
-                  console.log(this.coins);
+                  // console.log(this.coins);
                 /** else.. */
                 } else {
                   this.isCoinsFound = false;
@@ -103,7 +107,6 @@ export class ViewCoinsPage {
 
       });
     });
-    // console.log('View-Coins-Page called!');
   }
 
   ionViewWillLeave() {
@@ -114,7 +117,7 @@ export class ViewCoinsPage {
 
   initForm() {
     this.aggregateForm = this.formBuilder.group({
-      selectedCoinsArr: this.formBuilder.array([], [Validators.required])
+      selectedCoinsArr: this.formBuilder.array([], [Validators.required, Validators.minLength(2)])
     });
   }
 
@@ -140,25 +143,27 @@ export class ViewCoinsPage {
     }
   }
 
-  aggregateCoins(tokenid: string) {
-    const selected = this.aggregateForm.get('selectedCoinsArr');
-    try {
-      if (selected.value.length > 0 && tokenid !== '') {
-        this.api.createTransaction(tokenid, selected.value);
-      } else {
-        console.log(app + ': cannot post a transaction with no tokenid or no coinsSelected.');
-      }
-    } catch (err) {
-      throw new Error(app + ': posting aggregate transaction failed.');
-    }
-  }
-
   async displayAggregateModal(sCoins: SelectedCoins[], tid: string) {
+    this.resetForm();
     const aggregateModal = await this.modalController.create({
       component: AggregatePage,
       cssClass: 'aggregate-page-modal',
       componentProps: {selectedCoinsArr: sCoins, tokenid: tid},
     });
     return await aggregateModal.present();
+  }
+
+  async displaySendModal(sCoins: SelectedCoins[], tid: string) {
+    this.coins.forEach(coin => {
+      coin.checked = true;
+      console.log(coin.checked);
+      console.log('Hola');
+    });
+    this.resetForm();
+    const sendModal = await this.modalController.create({
+      component: SendPage,
+      componentProps: {selectedCoinsArr: sCoins, tokenid: tid},
+    });
+    return await sendModal.present();
   }
 }

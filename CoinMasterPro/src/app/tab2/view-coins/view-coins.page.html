@@ -20,11 +20,19 @@
   <ion-card *ngIf="found">
     <ion-card-header>
       <div class="functions">
-        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear" type="submit" (click)="displayAggregateModal(aggregateForm.value, token[0]?.tokenid)">
+        <ion-button
+        #aggregateBtn
+        [disabled]="this.aggregateForm.invalid" 
+        fill="clear" 
+        type="submit" 
+        (click)="displayAggregateModal(aggregateForm.value, token[0]?.tokenid)">
           <!-- <ion-icon name="color-filter-outline"></ion-icon> -->
           Aggregate
         </ion-button>
-        <ion-button [disabled]="this.aggregateForm.invalid" fill="clear">
+        <ion-button 
+        [disabled]="this.aggregateForm.invalid" 
+        fill="clear"
+        (click)="displaySendModal(aggregateForm.value, token[0]?.tokenid)">
           <!-- <ion-icon name="person-circle-outline"></ion-icon> -->
           Send
         </ion-button>
@@ -52,7 +60,7 @@
       </div>
       <form [formGroup]="aggregateForm" id="aggregateForm">
         <!-- {{ aggregateForm.value | json }} -->
-        <ion-grid *ngIf="isCoinsFound">
+        <ion-grid #coinsGrid *ngIf="isCoinsFound">
           <ion-row *ngFor="let coin of coins">
             <ion-col sizeXs="3" sizeSm="2" sizeMd="1">
               <ion-avatar><img src="assets/coin.svg" alt="coinImage"></ion-avatar>
@@ -70,13 +78,10 @@
                 </p>
               </ion-label>
             </ion-col>
-            <!-- <ion-col>
-              <ion-label>
-                {{ coin.coin.amount }}
-              </ion-label>
-            </ion-col> -->
             <ion-col id="checkbox">
-              <ion-checkbox [value]="{coinid: coin.coin.coinid, amount: coin.coin.amount}" (ionChange)="onCheckboxChange($event)"></ion-checkbox>
+              <ion-checkbox
+              [value]="{coinid: coin.coin.coinid, amount: coin.coin.amount}" 
+              (ionChange)="onCheckboxChange($event)"></ion-checkbox>
             </ion-col>
           </ion-row>
         </ion-grid>

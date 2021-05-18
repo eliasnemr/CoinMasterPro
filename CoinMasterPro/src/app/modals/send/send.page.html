@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aggregating coins...</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <h6 *ngIf="selectedCoins?.length > 1" class="ion-no-padding ion-no-margin">You are about to aggregate {{ selectedCoins?.length }} coins...</h6>
+      <h6 *ngIf="selectedCoins?.length === 1" class="ion-no-padding ion-no-margin">You are about to aggregate {{ selectedCoins?.length }} coin...</h6>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+        <div class="preview">Preview</div>
+        <ion-row>
+          <ion-col sizeXs="3" sizeSm="2" sizeMd="2">
+            <ion-avatar>
+              <ion-avatar><img src="assets/coin.svg" alt="coinImage"></ion-avatar>
+            </ion-avatar>
+          </ion-col>
+          <ion-col>
+            <ion-label>
+              <h2>
+                Aggregated coin
+              </h2>
+              <p>{{ totalOutput }}</p>
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-card-subtitle>
+      <form [formGroup]="sendForm" id="sendForm">
+        <!-- {{ sendForm.value | json }} -->
+        <ion-grid class="ion-no-padding ion-no-margin">
+          <ion-row class="ion-no-padding">
+            <ion-col class="ion-no-padding">
+              <ion-label position="stacked">
+                <ion-icon 
+                *ngIf="addressFormItem.touched && addressFormItem.invalid" 
+                name="alert-circle-outline"
+                color="danger"></ion-icon>
+                Recipient address
+              </ion-label>
+              <ion-input formControlName="address" placeholder="enter your recipients 0x or Mx address here"> </ion-input>
+              <ion-note id="danger" *ngIf="addressFormItem.touched && addressFormItem.invalid">
+                Address is required and must be a Minima address of 0x or Mx format.
+              </ion-note>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-no-padding">
+            <ion-col class="ion-no-padding">
+              <ion-label>
+                <ion-icon 
+                *ngIf="amountFormItem.touched && amountFormItem.invalid" 
+                name="alert-circle-outline"
+                color="danger"></ion-icon>
+                Amount
+              </ion-label>
+              <ion-input formControlName="amount" type="number" placeholder="enter coin amount"> </ion-input>
+              <ion-note *ngIf="amountFormItem.touched && amountFormItem.invalid">
+                Amount is required.  <span id="total">{{ totalOutput }}</span> total coin amount available.
+              </ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+      <ion-label id="warning">
+        This transaction cannot be reverted once confirmed.
+      </ion-label>
+      <ion-toolbar>
+        <ion-button (click)="modalController.dismiss()" slot="end" fill="clear">
+          Cancel
+        </ion-button>
+        <ion-button 
+        #confirmBtn 
+        (click)="aggregateCoins()" 
+        slot="end" 
+        fill="clear"
+        [disabled]="sendForm.invalid">
+          Confirm
+        </ion-button>
+      </ion-toolbar>
+    </ion-card-subtitle>
+  </ion-card>
+
+</ion-content>
