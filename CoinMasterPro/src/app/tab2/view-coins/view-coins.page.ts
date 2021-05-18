@@ -42,6 +42,7 @@ export class ViewCoinsPage {
   $routerSubscription: Subscription;
   $balanceSubscription: Subscription;
   $coinSubscription: Subscription;
+  ascending: boolean;
   coins: Coin[];
   token: Token[];
   selectedCoins: Subject<SelectedCoins[]>;
@@ -56,7 +57,8 @@ export class ViewCoinsPage {
     private api: ApiService,
     private tools: ToolsService,
     private formBuilder: FormBuilder) {
-    /** initialize form */
+    this.ascending = true;
+      /** initialize form */
     this.initForm();
     this.selectedCoins = new ReplaySubject<SelectedCoins[]>(1);
     this.coins = [];
@@ -82,6 +84,7 @@ export class ViewCoinsPage {
               coins.then((resp: any) => {
                 const totalCoins = resp.response.coins;
                 this.coins = totalCoins;
+                this.coins = this.coins.sort(this.sortAsc);
                 /** if coins found return true.. */
                 if (this.coins.length > 0) {
                   this.isCoinsFound = true;
@@ -113,6 +116,24 @@ export class ViewCoinsPage {
     this.$routerSubscription.unsubscribe();
     this.$balanceSubscription.unsubscribe();
     this.resetForm();
+  }
+
+  sortAsc(a: Coin, b: Coin) {
+    return a.coin.amount.localeCompare(b.coin.amount);
+  }
+
+  sortDesc(a: Coin, b: Coin) {
+    return b.coin.amount.localeCompare(a.coin.amount);
+  }
+
+  flipCoins() {
+    if (this.ascending) {
+      this.ascending = false;
+      this.coins = this.coins.sort(this.sortDesc);
+    } else {
+      this.ascending = true;
+      this.coins = this.coins.sort(this.sortAsc);
+    }
   }
 
   initForm() {
@@ -154,11 +175,6 @@ export class ViewCoinsPage {
   }
 
   async displaySendModal(sCoins: SelectedCoins[], tid: string) {
-    this.coins.forEach(coin => {
-      coin.checked = true;
-      console.log(coin.checked);
-      console.log('Hola');
-    });
     this.resetForm();
     const sendModal = await this.modalController.create({
       component: SendPage,

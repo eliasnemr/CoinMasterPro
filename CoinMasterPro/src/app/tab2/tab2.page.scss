@@ -38,3 +38,11 @@ ion-grid.balance {
     background: var(--ion-color-hover);
   }
 }
+
+div.not-found-text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  opacity: 0.7;
+}

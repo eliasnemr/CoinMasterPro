@@ -1,0 +1,11 @@
+@media only screen and (min-width: 992px) {
+  ion-app {
+    margin: auto;
+    max-width: 740px;
+    max-height: 870px;
+    border: 1px solid var(--ion-color-ruler);
+  }
+  body {
+    background: #F0F0FA;
+  }
+}

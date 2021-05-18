@@ -12,8 +12,10 @@
       <ion-title size="large">Your Tokens</ion-title>
     </ion-toolbar>
   </ion-header>
-  
-  <ion-grid class="balance">
+  <div *ngIf="myTokens.length === 0" class="not-found-text-wrapper">
+    Your node may be offline, please check and try again.
+  </div>
+  <ion-grid *ngIf="myTokens" class="balance">
     <ion-router-outlet></ion-router-outlet>
     <ion-row [routerLink]="['view-coins/'+token.tokenid]" *ngFor="let token of myTokens">
       <ion-col size="2">

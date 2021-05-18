@@ -5,7 +5,7 @@ import { ApiService } from './../services/api.service';
 import { Subscription } from 'rxjs';
 
 interface TotalToken extends Token {
-  totalCoins: number
+  totalCoins?: number;
 }
 
 const cryptocurrency = 'Minima';
@@ -16,7 +16,7 @@ const cryptocurrency = 'Minima';
 })
 export class Tab2Page {
 
-  myTokens: TotalToken[] | Token[];
+  myTokens: TotalToken[];
   $balanceSubscription: Subscription;
 
   constructor(private api: ApiService, private tools: ToolsService) {
@@ -26,7 +26,7 @@ export class Tab2Page {
   ionViewWillEnter() {
     this.$balanceSubscription =
     this.api.$balance.subscribe((tokens: Token[]) => {
-      console.log(cryptocurrency + ': balance updated!');
+      // console.log(cryptocurrency + ': balance updated!');
       this.myTokens = tokens;
       this.myTokens.forEach((token: TotalToken) => {
         token.totalCoins = 0;
@@ -44,7 +44,7 @@ export class Tab2Page {
         if (token.tokenid !== '0x00' && token.icon === '') {
           token.icon = this.tools.createAvatarIcon(token.tokenid);
         }
-      })
+      });
     });
   }
 
