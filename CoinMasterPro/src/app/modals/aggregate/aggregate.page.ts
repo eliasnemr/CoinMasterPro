@@ -34,18 +34,9 @@ export class AggregatePage implements OnInit {
     this.selectedCoins = this.navParams.get('selectedCoinsArr').selectedCoinsArr; /** Retrieve passed data */
     this.tokenid = this.navParams.get('tokenid'); /** Retrieve passed tokenid */
     this.totalOutput = new Decimal(0);
-    this.selectedCoins.forEach(coin => {
+    this.selectedCoins.forEach((coin: any) => {
       this.totalOutput =
-      this.totalOutput.add(new Decimal(coin.amount));
-    });
-    this.scaleToken();
-  }
-
-  async scaleToken() {
-    await this.api.scale(this.tokenid, 'minima', this.totalOutput).then((res: any) => {
-      if (res.status && this.tokenid !== '0x00') {
-        this.totalOutputScaled = res.response.token;
-      }
+      this.totalOutput.add(new Decimal(coin.tokenamount));
     });
   }
 

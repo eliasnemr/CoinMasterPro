@@ -45,7 +45,7 @@ export class SendPage implements OnInit {
     this.tokenid = this.navParams.get('tokenid'); /** Retrieve passed tokenid */
     this.totalOutput = new Decimal(0);
     this.totalOutputScaled = new Decimal(0);
-    this.selectedCoins.forEach((coin) => {
+    this.selectedCoins.forEach((coin: any) => {
       this.totalOutput =
       this.totalOutput.add(new Decimal(coin.tokenamount));
     });
