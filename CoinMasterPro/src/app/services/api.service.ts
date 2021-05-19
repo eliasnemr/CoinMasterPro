@@ -78,7 +78,15 @@ export class ApiService {
     // console.log('tokenid:'+ tokenid + ' selectedCoins:'+ coinsArr);
     const id = Math.floor(Math.random() * 1000000000);
     const myAddress = await this.getAddress();
-    const amount = new Decimal(amnt);
+    let amount = new Decimal(amnt);
+    if (tokenid !== '0x00') {
+      await this.scale(tokenid, 'token', amnt).then((res: any) => {
+        console.log(res);
+        if (res.status) {
+          amount = new Decimal(res.response.minima);
+        }
+      });
+    }
     const inputString = await this.generateInputText(coinsArr, id); console.log(app + ':'+ ' inputString created:' + inputString);
     /** workout aggregating total of inputs */
     let total = new Decimal('0');
@@ -120,7 +128,6 @@ export class ApiService {
       return true;
     } else {
       throw new Error(app+ ': failed to post transaction.  Error:'+JSON.stringify(result));
-      return false;
     }
   }
 
@@ -136,6 +143,10 @@ export class ApiService {
         throw new Error(app + ': generating input text failed!');
       }
     });
+  }
+
+  scale(tokenid: string, type: string, amount: string) {
+    return this.req('tokenscale ' + tokenid + ' ' + type + ':' + amount);
   }
 
   postTransaction(transaction: string) {
@@ -159,6 +170,7 @@ export class ApiService {
       }
     });
   }
+
 
   req(fnc: any) {
     return new Promise((resolve, reject) => {

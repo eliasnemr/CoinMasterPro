@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function checkAmount(val: any): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    // console.log(val);
+    console.log(val);
     const a = new Decimal(val);
     if (control.value > a) {
       return {invalidAmount: true};
@@ -31,6 +31,7 @@ export class SendPage implements OnInit {
   selectedCoins: SelectedCoins[];
   tokenid: string;
   totalOutput: any;
+  totalOutputScaled: any;
 
   constructor(
     public modalController: ModalController,
@@ -40,13 +41,13 @@ export class SendPage implements OnInit {
     private formBuilder: FormBuilder,
     private route: Router
   ) {
-    this.totalOutput = 0;
     this.selectedCoins = this.navParams.get('selectedCoinsArr').selectedCoinsArr; /** Retrieve passed data */
     this.tokenid = this.navParams.get('tokenid'); /** Retrieve passed tokenid */
     this.totalOutput = new Decimal(0);
-    this.selectedCoins.forEach(coin => {
+    this.totalOutputScaled = new Decimal(0);
+    this.selectedCoins.forEach((coin) => {
       this.totalOutput =
-      this.totalOutput.add(new Decimal(coin.amount));
+      this.totalOutput.add(new Decimal(coin.tokenamount));
     });
     this.initForm();
   }

@@ -38,6 +38,15 @@ export class AggregatePage implements OnInit {
       this.totalOutput =
       this.totalOutput.add(new Decimal(coin.amount));
     });
+    this.scaleToken();
+  }
+
+  async scaleToken() {
+    await this.api.scale(this.tokenid, 'minima', this.totalOutput).then((res: any) => {
+      if (res.status && this.tokenid !== '0x00') {
+        this.totalOutputScaled = res.response.token;
+      }
+    });
   }
 
   ionViewWillLeave() {

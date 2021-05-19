@@ -30,6 +30,7 @@ export interface Coin {
 export interface SelectedCoins {
   coinid: string;
   amount: string;
+  tokenamount: string;
 }
 
 @Component({
@@ -179,7 +180,7 @@ export class ViewCoinsPage {
     this.resetForm();
     const sendModal = await this.modalController.create({
       component: SendPage,
-      componentProps: {selectedCoinsArr: sCoins, tokenid: tid},
+      componentProps: {selectedCoinsArr: sCoins, tokenid: tid, },
     });
     return await sendModal.present();
   }
