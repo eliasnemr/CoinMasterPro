@@ -17,6 +17,7 @@ export class AggregatePage implements OnInit {
   selectedCoins: SelectedCoins[];
   tokenid: string;
   totalOutput: any;
+  totalOutputScaled: any;
 
   constructor(
     public modalController: ModalController,

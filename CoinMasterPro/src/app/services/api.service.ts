@@ -52,6 +52,7 @@ export class ApiService {
     let total = new Decimal('0');
     // console.log('initTotal: '+ total);
     coinsArr.forEach((coin: SelectedCoins) => {
+      console.log(coin.amount);
       total = total.add(new Decimal(coin.amount));
     });
     // console.log('totalFinish: '+total.toString());
@@ -143,7 +144,7 @@ export class ApiService {
         if (transaction !== '') {
           this.req(transaction).then((res: any) => {
             if (Minima.util.checkAllResponses(res)) {
-              // console.log(res);
+              console.log(res);
               resolve(true);
             } else {
               resolve(false);

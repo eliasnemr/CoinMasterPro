@@ -8,6 +8,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController, IonButton } from '@ionic/angular';
+import { Minima } from 'minima';
 
 interface TokenId {
   tokenId: string;
